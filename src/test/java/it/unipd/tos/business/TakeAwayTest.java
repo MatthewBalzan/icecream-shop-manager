@@ -15,6 +15,7 @@ import org.junit.Test;
 import it.unipd.tos.business.exception.TakeAwayBillException;
 import it.unipd.tos.model.MenuItem;
 import it.unipd.tos.model.User;
+import it.unipd.tos.model.BillTotal;
 
 public class TakeAwayTest {
 
@@ -109,6 +110,26 @@ public class TakeAwayTest {
         totalPrice = manager.getOrderPrice(lista,user);
 
         assertEquals(1.60,totalPrice,0.01);
+    }
+
+    @Test
+    public void ordiniGratisMinorennitra18e19Test() throws TakeAwayBillException{
+        List<BillTotal> ordinazioni = new ArrayList<BillTotal>();
+        lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 1.00));
+
+        User user = null;
+        for (int i = 0; i < 12; i++) {
+            user = new User("Matthew", "Balzan", LocalDate.of(2006,1,i+1));
+            ordinazioni.add(new BillTotal(lista, user,  66600, manager.getOrderPrice(lista, user)));
+        }
+
+        List<BillTotal> ordinazioniFree = manager.getFreeBills(ordinazioni);
+
+        assertEquals(10, ordinazioniFree.size());
+        
+        for (BillTotal i : ordinazioniFree) {
+            assertEquals(0.0, i.getPrice(),0.01);
+        }
     }
 
 } 
