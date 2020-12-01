@@ -26,6 +26,11 @@ public class TakeAwayGelateria implements TakeAwayBill{
                 ("La lista contiene un elemento nullo"); 
         }
 
+        if(itemsOrdered.size()>30){
+            throw new TakeAwayBillException
+                ("La lista contiene piu' di 30 elementi"); 
+        }
+
         for(MenuItem i : itemsOrdered) {
             totalPrice += i.getPrice();
             if(i.getItemType() == MenuItem.item.Gelato){

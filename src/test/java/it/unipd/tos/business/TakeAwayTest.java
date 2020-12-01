@@ -91,4 +91,19 @@ public class TakeAwayTest {
         assertEquals(63.00,totalPrice,0.01);
     }
 
+    @Test
+    public void limit30itemsTest() throws TakeAwayBillException{
+        List<MenuItem> lista = new ArrayList<MenuItem>();
+
+        for (int i = 0; i < 31; i++) {
+            lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 1.00));
+        }
+        try{
+            totalPrice = manager.getOrderPrice(lista,user);
+        }catch(TakeAwayBillException e){
+            assertEquals("La lista contiene piu' di 30 elementi", e.getMessage());
+        }
+        
+    }
+
 } 
