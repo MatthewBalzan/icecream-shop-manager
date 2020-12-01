@@ -13,6 +13,7 @@ public class TakeAwayGelateria implements TakeAwayBill{
     public double getOrderPrice(List<MenuItem> itemsOrdered, User user)
      throws TakeAwayBillException{
         Double totalPrice = 0.0;
+        Double eatingPrice = 0.0;
         int nGelati = 0;
         MenuItem gelatoMenoCostoso = null;
 
@@ -33,11 +34,19 @@ public class TakeAwayGelateria implements TakeAwayBill{
                     gelatoMenoCostoso = i;
                 }
             } 
+            if(i.getItemType() != MenuItem.item.Bevanda){
+                eatingPrice += i.getPrice();
+            }
         }
 
         //sconto sul gelato meno costoso se presi +5 gelati
         if(nGelati>5){
             totalPrice -= 0.5 * gelatoMenoCostoso.getPrice();
+        }
+
+        //sconto 10% se le ordinazione di cibi e' > 50€
+        if(eatingPrice>50){
+            totalPrice -= 0.1 * totalPrice;
         }
 
         return totalPrice;

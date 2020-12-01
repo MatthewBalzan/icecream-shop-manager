@@ -78,4 +78,17 @@ public class TakeAwayTest {
         assertEquals(21.00,totalPrice,0.01);
     }
 
+    @Test
+    public void scontoDi10PerCentoTest() throws TakeAwayBillException{
+        List<MenuItem> lista = new ArrayList<MenuItem>();
+
+        lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 30.00));
+        lista.add(new MenuItem(MenuItem.item.Budino, "Pinguino", 30.00));
+        lista.add(new MenuItem(MenuItem.item.Bevanda, "Cola", 10.00));
+
+        totalPrice = manager.getOrderPrice(lista,user);
+
+        assertEquals(63.00,totalPrice,0.01);
+    }
+
 } 
