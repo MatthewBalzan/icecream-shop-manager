@@ -54,6 +54,11 @@ public class TakeAwayGelateria implements TakeAwayBill{
             totalPrice -= 0.1 * totalPrice;
         }
 
+        //commissione di 0.50€ per ordini < 10€
+        if(totalPrice<10){
+            totalPrice += 0.50;
+        }
+
         return totalPrice;
     }
 }

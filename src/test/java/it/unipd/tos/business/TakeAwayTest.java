@@ -34,7 +34,6 @@ public class TakeAwayTest {
 
      @Test
     public void simpleSumTest() throws TakeAwayBillException{
-        List<MenuItem> lista = new ArrayList<MenuItem>();
 
         lista.add(new MenuItem(MenuItem.item.Bevanda, "Cola", 3.00));
         lista.add(new MenuItem(MenuItem.item.Budino, "Pinguino", 1.50));
@@ -47,14 +46,13 @@ public class TakeAwayTest {
 
     @Test(expected = TakeAwayBillException.class) 
     public void nullListTest() throws TakeAwayBillException{
-        List<MenuItem> lista = null;
+        lista = null;
 
         totalPrice = manager.getOrderPrice(lista,user);
     }
 
     @Test(expected = TakeAwayBillException.class) 
     public void nullItemInListTest() throws TakeAwayBillException{
-        List<MenuItem> lista = new ArrayList<MenuItem>();
 
         lista.add(null);
         lista.add(new MenuItem(MenuItem.item.Budino, "Pinguino", 1.50));
@@ -64,7 +62,6 @@ public class TakeAwayTest {
 
     @Test
     public void scontoDiPiuDi5GelatiTest() throws TakeAwayBillException{
-        List<MenuItem> lista = new ArrayList<MenuItem>();
 
         lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 4.00));
         lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 4.00));
@@ -80,7 +77,6 @@ public class TakeAwayTest {
 
     @Test
     public void scontoDi10PerCentoTest() throws TakeAwayBillException{
-        List<MenuItem> lista = new ArrayList<MenuItem>();
 
         lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 30.00));
         lista.add(new MenuItem(MenuItem.item.Budino, "Pinguino", 30.00));
@@ -93,7 +89,6 @@ public class TakeAwayTest {
 
     @Test
     public void limit30itemsTest() throws TakeAwayBillException{
-        List<MenuItem> lista = new ArrayList<MenuItem>();
 
         for (int i = 0; i < 31; i++) {
             lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 1.00));
@@ -104,6 +99,16 @@ public class TakeAwayTest {
             assertEquals("La lista contiene piu' di 30 elementi", e.getMessage());
         }
         
+    }
+
+    @Test
+    public void commissione050Test() throws TakeAwayBillException{
+
+        lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 1.10));
+        
+        totalPrice = manager.getOrderPrice(lista,user);
+
+        assertEquals(1.60,totalPrice,0.01);
     }
 
 } 
