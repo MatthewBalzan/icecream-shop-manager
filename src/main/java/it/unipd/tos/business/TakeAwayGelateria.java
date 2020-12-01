@@ -13,6 +13,8 @@ public class TakeAwayGelateria implements TakeAwayBill{
     public double getOrderPrice(List<MenuItem> itemsOrdered, User user)
      throws TakeAwayBillException{
         Double totalPrice = 0.0;
+        int nGelati = 0;
+        MenuItem gelatoMenoCostoso = null;
 
         if(itemsOrdered == null) {
             throw new TakeAwayBillException("La lista non esiste"); 
@@ -23,8 +25,19 @@ public class TakeAwayGelateria implements TakeAwayBill{
                 ("La lista contiene un elemento nullo"); 
         }
 
-        for(MenuItem item : itemsOrdered) {
-            totalPrice += item.getPrice(); 
+        for(MenuItem i : itemsOrdered) {
+            totalPrice += i.getPrice();
+            if(i.getItemType() == MenuItem.item.Gelato){
+                nGelati++;
+                if(gelatoMenoCostoso==null || gelatoMenoCostoso.getPrice()>i.getPrice()){
+                    gelatoMenoCostoso = i;
+                }
+            } 
+        }
+
+        //sconto sul gelato meno costoso se presi +5 gelati
+        if(nGelati>5){
+            totalPrice -= 0.5 * gelatoMenoCostoso.getPrice();
         }
 
         return totalPrice;

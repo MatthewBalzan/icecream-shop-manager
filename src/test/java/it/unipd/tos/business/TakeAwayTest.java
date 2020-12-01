@@ -62,4 +62,20 @@ public class TakeAwayTest {
         totalPrice = manager.getOrderPrice(lista,user);
     }
 
+    @Test
+    public void scontoDiPiuDi5GelatiTest() throws TakeAwayBillException{
+        List<MenuItem> lista = new ArrayList<MenuItem>();
+
+        lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 4.00));
+        lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 4.00));
+        lista.add(new MenuItem(MenuItem.item.Gelato, "Cioccolata", 2.00));
+        lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 4.00));
+        lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 4.00));
+        lista.add(new MenuItem(MenuItem.item.Gelato, "Coppa Nafta", 4.00));
+
+        totalPrice = manager.getOrderPrice(lista,user);
+
+        assertEquals(21.00,totalPrice,0.01);
+    }
+
 } 
